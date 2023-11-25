@@ -122,7 +122,6 @@ mcd ()
        cd -P -- "$1"
 }
 
-alias make-and-cd-directory="echo mcd alias"
 
 # Uptime and Random Man Page Reminder on Terminal Start
 uptime
@@ -167,6 +166,9 @@ alias yacreader="YACReader"
 
 # Run XIVLauncher
 alias xiv="flatpak run dev.goats.xivlauncher"
+# Go to DMenu Entry Directory $PATH
+alias dmenu-add="cd /usr/bin/"
+alias dma="cd /usr/bin/"
 
 # Go to XIV Mods Directory
 alias moddir="cd /home/fae/game-ssd/ffxiv-mods/"
