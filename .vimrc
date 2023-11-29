@@ -55,8 +55,11 @@ call plug#begin()
 
 Plug 'rust-lang/rust.vim'
 Plug 'dense-analysis/ale'
+Plug 'vimwiki/vimwiki'
 
 call plug#end()
 
 syntax enable
 filetype plugin indent on
+
+set nocompatible
