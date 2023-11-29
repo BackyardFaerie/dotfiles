@@ -191,7 +191,7 @@ alias v="vim"
 alias vc="vim ~/.vimrc"
 
 # Edit .bashrc
-alias bc="vim ~/.bashrc"
+alias vbc="vim ~/.bashrc"
 
 # Rust Cargo Set Dir
 . "$HOME/.cargo/env"
