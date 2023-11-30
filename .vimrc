@@ -63,3 +63,7 @@ syntax enable
 filetype plugin indent on
 
 set nocompatible
+
+"Vimwiki Markdown Enable
+let g:vimwiki_list = [{'path': '~/vimwiki/',
+			\ 'syntax': 'markdown', 'ext': '.wiki'}]
