@@ -204,3 +204,6 @@ alias dotfiles='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
 # Reload .bashrc
 alias sbc="source /home/fae/.bashrc"
+
+# Open Vimwiki Index
+alias vw="vim -c VimwikiIndex"
