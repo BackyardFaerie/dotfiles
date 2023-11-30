@@ -1,0 +1,77 @@
+# Variables and Constants
+1: Variables defined via
+	<code>let x = value;</code>
+
+2: All vars are immutable by default, explicit mut is required to make them mutable
+	<code>let mut x = value;</code>
+
+3: You can **ONLY** assign values to mutable variables of the correct type e.g chars/strings cannot be assigned to integers
+	<code>let mut x = 5;
+	let x = 'd';</code>
+
+4: Contrary to above, immutable vars when redeclared create a new var (even in same scope) and can even be of a different data type, note as above that this is **NOT** applicable to mutable vars
+	<code>Legal		Illegal
+	let x = 5;		let mut x = 5;
+	...			...
+	let x = string;		let x = string;</code>
+Mutable vars can change **VALUE** within a scope but *NOT DATA TYPE*
+In the above example, if x was redeclared as an integer it could also call the previous value of x which was 5 and be let x = x + 12 and that doesn't give a compiler error. This is not shadowing because the two vars (confusingly both called x)
+are within the same scope, it _would_ be shadowing if they were in _different_ scopes. I think mutable vars are unable to be redeclared, since their value can change over time but they remain the same var in runtime where immutable vars are
+able to be redeclared since their values don't change over time so another var can be stored in runtime despite both being x to the user which would lead to this behaviour. This is different to constants because they can never change their
+value or data type in the entire program
+
+5: Variables are implicitly assigned a data type if no explicit type is given
+	<code>Implicit	Explicit
+	let x = 6;	let x:u8 = 6;
+</code>
+6: Variables can be embedded into strings with <code>("{}", x)</code> as below
+	<code>println!("Some words {}, x);</code> or <code>println!("x is equal to {x}");</code>
+I think the println macro is a function here judging by the () meaning maybe the {} is a scope or maybe it is to give the compiler a place to assign the var like an array or something but I'm not sure
+
+7: Redeclaring a var of the same name within the same scope is allowed, it creates another var of the same name with a different value *ONLY* if neither is mut (What? This is confusing and something to look into further)
+	Legal
+<code>	let x = 5;
+	...
+	let x = 12;
+</code>
+8: Constants defined via
+<code>	const CONST_EXAMPLE: u32 = 18;</code>
+Constants can **NEVER** change their data type nor value in the entire program, unlike redeclaring a var in Variables
+
+# Scope
+1: Scope is generally anything contained within {}
+
+2: Having a scope inside of another is allowed
+<code>fn main() {
+let x = value;
+...
+	{
+	...
+	}
+
+}</code>
+
+3: Redeclaring a var from another scope with a different value is shadowing
+
+# Shadowing
+1: Redeclaring a var from another scope with a different value is shadowing, this does not give a compiler error
+<code>	fn main(){
+	let x = 1;
+		{</code> <---internal scope begin
+		<code>let x = 3;</code> <---shadowing (note {} is internal scope but calling x from parent scope, x here calls from the parent scope and sets a value in this interior scope and therefore *IS* shadowing)
+		<code>}</code> <---internal scope end
+<code>	let x = 2;</code> <---**NOT** shadowing (this line is in the parent scope of main(){} as is x = 1, the scope is the same and therefore is *NOT* shadowing)
+	<code>}
+</code>
+# Control Flow, If/Else/Else if Statements and Blocks
+1: If statements can be stacked and nested within each other
+    <code>if fizzish == "fizz" {return "foo";}
+    if fizzish == "fuzz" {return "bar";}
+    else {return "baz";}</code>
+Note that switch or match statements are better suited to this purpose of comparing a few conditions
+
+2: Else if statements require an if statement before them
+
+3: Else statements require if statement(s) and/or optional else if before them
+
+4: The return value of a conditional is placed within {}, <code>return</code> is not needed unless an early return is desired
