@@ -1,3 +1,9 @@
 1: Open New File in Same Buffer (Workaround)
 <code> :e thefile | bd# </code> // open file 'thefile' then clear previous buffer, effectively open a new file in current buffer
 [Source](https://stackoverflow.com/questions/17611862/vim-how-to-open-new-file-in-current-buffer) (URL)
+
+2: Encrypt file within Vim when accessing file
+	<code>:X</code>
+	
+3: Decrypt file within Vim when accessing file
+	<code>:set key=</code> <---blank after = to make passkey nothing

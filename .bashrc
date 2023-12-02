@@ -201,7 +201,7 @@ export EDITOR=vi
 
 # Edit dotfiles Repo
 alias dotfiles='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
-
+alias dot='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 # Reload .bashrc
 alias sbc="source /home/fae/.bashrc"
 
