@@ -13,3 +13,7 @@
 	$ ^file1^file2</code> (could also be <code>^</code>1<code>^</code>2)
 
 4: Ctrl+U (^CU) to clear prompt
+
+5: Make Terminal Use Vim Mode Keybinds
+	<code>set -o vim</code>
+^Starts in insert mode unlike actual Vim, use ESC as usual to go to normal mode and navigate^
