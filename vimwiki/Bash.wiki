@@ -1,0 +1,15 @@
+# Time Saving Shortcuts
+1: History can take relative values to refer to commands from newest to oldest
+	<code>history -4</code> <---runs fourth last command
+	
+2: ! can search previous commands via string as below
+	<code>!ap</code> <---would run <code>apt update</code> assuming there were no other commands starting with <code>ap</code> more recently (like <code>apt-search cache</code>)
+	
+3: Caret can be used to replace text (e.g fix spelling mistake) or run the same command in the same dir but a slightly different option
+	<code>apt updtae
+	$ ^tae^ate</code> <---format is <code>^</code>string<code>^</code>replacement</code>
+
+	<code>vim path/to/file1
+	$ ^file1^file2</code> (could also be <code>^</code>1<code>^</code>2)
+
+4: Ctrl+U (^CU) to clear prompt

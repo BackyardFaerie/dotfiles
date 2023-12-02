@@ -1,0 +1,3 @@
+1: Open New File in Same Buffer (Workaround)
+<code> :e thefile | bd# </code> // open file 'thefile' then clear previous buffer, effectively open a new file in current buffer
+[Source](https://stackoverflow.com/questions/17611862/vim-how-to-open-new-file-in-current-buffer) (URL)
