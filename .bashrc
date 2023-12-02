@@ -205,7 +205,7 @@ alias dot='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
 # Push Origin Master (Update Dotfiles GitHub Repo)
 alias dpm='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
-alias dotup='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+alias dotup='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME push origin master'
 
 # Reload .bashrc
 alias sbc="source /home/fae/.bashrc"
