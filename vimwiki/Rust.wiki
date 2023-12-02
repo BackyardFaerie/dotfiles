@@ -38,6 +38,8 @@ I think the println macro is a function here judging by the () meaning maybe the
 <code>	const CONST_EXAMPLE: u32 = 18;</code>
 Constants can **NEVER** change their data type nor value in the entire program, unlike redeclaring a var in Variables
 
+9: [[https://en.wikipedia.org/wiki/Local_variable|Local variables]] must be known at compile time because they take up a set amount of memory
+
 # Scope
 1: Scope is generally anything contained within {}
 
@@ -75,3 +77,20 @@ Note that switch or match statements are better suited to this purpose of compar
 3: Else statements require if statement(s) and/or optional else if before them
 
 4: The return value of a conditional is placed within {}, <code>return</code> is not needed unless an early return is desired
+
+# Arrays/Slices
+1: Declare arrays as follows
+	<code>let arrayName: [dataType; size] = [val1, val2, val3];</code>
+
+2: Array sizes, traits and other [[https://en.wikipedia.org/wiki/Local_variable|local variables]] must be known at compile time since they can only take up a certain amount of memory and this must be known when compiling
+
+3: Slices are very usually  [[https://doc.rust-lang.org/book/ch04-02-references-and-borrowing.html|borrowed references]] due to taking a known amount of memory since they are effectively just pointers
+	<code>let sliceName: &[dataType] = &[assignedValue];</code>
+
+#  Tuples
+1: [[https://doc.rust-lang.org/book/ch03-02-data-types.html#the-tuple-type|Tuples]] combine data types into one variable (like an array of various data types)
+
+2: Declare tuples as follows
+	<code>let tup: (dataType1, dataType2, dataType3);</code> <---note that there is no <code>=</code> the tuple is declared with the values contained in ()
+
+3: Tuples **CANNOT** change size 
