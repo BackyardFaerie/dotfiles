@@ -91,6 +91,18 @@ Note that switch or match statements are better suited to this purpose of compar
 1: [[https://doc.rust-lang.org/book/ch03-02-data-types.html#the-tuple-type|Tuples]] combine data types into one variable (like an array of various data types)
 
 2: Declare tuples as follows
-	<code>let tup: (dataType1, dataType2, dataType3);</code> <---note that there is no <code>=</code> the tuple is declared with the values contained in ()
+	<code>let tup: (dataType1, dataType2, dataType3) = (val1, val2, val3);</code> <---like variables, explicitly listing data types is optional. If data types are not explicitly given do not include <code>:</code>
 
-3: Tuples **CANNOT** change size 
+3: Tuples **CANNOT** change size
+
+4: Tuple indices can be referenced with {index}, naturally the tuple must be declared first
+	Example
+	<code>let value = {index};</code>
+	
+# Vectors
+1: [[https://doc.rust-lang.org/stable/book/ch08-01-vectors.html|Vectors]] store multiple values but **ALL MUST** be of the **SAME** data type unlike tuples
+
+2: The values of a vector are stored together in memory (in the stack?)
+	<code>data1, data2, VectorValue1, VectorValue2, VectorValue3, data3, data4...</code>
+
+3: 
