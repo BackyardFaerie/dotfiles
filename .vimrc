@@ -67,3 +67,7 @@ set nocompatible
 "Vimwiki Markdown Enable
 let g:vimwiki_list = [{'path': '~/vimwiki/',
 			\ 'syntax': 'markdown', 'ext': '.wiki'}]
+
+"I Cursor in Insert Mode
+    let &t_SI = "\e[6 q" " Vertical bar in insert mode
+    let &t_EI = "\e[2 q" " Block in normal mode
