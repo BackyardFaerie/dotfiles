@@ -202,6 +202,11 @@ export EDITOR=vi
 # Edit dotfiles Repo
 alias dotfiles='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias dot='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+
+# Push Origin Master (Update Dotfiles GitHub Repo)
+alias dpm='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+alias dotup='git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+
 # Reload .bashrc
 alias sbc="source /home/fae/.bashrc"
 
