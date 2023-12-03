@@ -40,6 +40,16 @@ Constants can **NEVER** change their data type nor value in the entire program, 
 
 9: [[https://en.wikipedia.org/wiki/Local_variable|Local variables]] must be known at compile time because they take up a set amount of memory
 
+10: Variables being used by functions cannot be used/borrowed until they are explicitly returned, in the below example the divide_nums function cannot use x until the multiply_nums function has returned it
+	<code>fn multiply_nums(int: i32) -> int32 {
+	let x:i32 = 5;
+	...
+	}
+	
+	fn divide_nums(int: i32) -> i32 {
+	...
+	}
+</code>
 # Scope
 1: Scope is generally anything contained within {}
 
@@ -78,6 +88,12 @@ Note that switch or match statements are better suited to this purpose of compar
 
 4: The return value of a conditional is placed within {}, <code>return</code> is not needed unless an early return is desired
 
+5: Iterating over values in an array or vector can have the same operation applied to each element with <code>+=</code> or <code>*=</code> (possibly /= and -=?). In the example below <code>values</code> of the vector are doubled.
+The <code>.iter_mut()</code> method is only there because the vector is mutable, I believe there is also a <code>.iter()</code> for immutable data e.g an array
+	<code>for values in vector.iter_mut() {
+	*values *= 2
+	}</code>
+	
 # Arrays/Slices
 1: Declare arrays as follows
 	<code>let arrayName: [dataType; size] = [val1, val2, val3];</code>
@@ -100,9 +116,12 @@ Note that switch or match statements are better suited to this purpose of compar
 	<code>let value = {index};</code>
 	
 # Vectors
-1: [[https://doc.rust-lang.org/stable/book/ch08-01-vectors.html|Vectors]] store multiple values but **ALL MUST** be of the **SAME** data type unlike tuples
+1: Declare vectors in one of the two following ways
+	<code>let vectorName = vec![];</code> OR <code>Vec::new()</code> then fill with <code>.push()</code> method
 
-2: The values of a vector are stored together in memory (in the stack?)
+2: [[https://doc.rust-lang.org/stable/book/ch08-01-vectors.html|Vectors]] store multiple values but **ALL MUST** be of the **SAME** data type unlike tuples
+
+3: The values of a vector are stored together in memory (in the stack?)
 	<code>data1, data2, VectorValue1, VectorValue2, VectorValue3, data3, data4...</code>
 
-3: 
+4: 
