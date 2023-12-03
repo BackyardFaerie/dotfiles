@@ -12,8 +12,10 @@
 	<code>vim path/to/file1
 	$ ^file1^file2</code> (could also be <code>^</code>1<code>^</code>2)
 
-4: Ctrl+U (^CU) to clear prompt
+4: Ctrl+U to clear prompt ^(actually deletes everything before cursor)^, Ctrl+K removes everything after cursor ^(in Vim mode these binds work in normal mode)^
 
 5: Make Terminal Use Vim Mode Keybinds
 	<code>set -o vim</code>
 ^Starts in insert mode unlike actual Vim, use ESC as usual to go to normal mode and navigate^
+
+6: In Vim mode d0 to delete from beginning of line to cursor, d$ to delete from cursor to end of line
