@@ -119,6 +119,7 @@ The <code>.iter_mut()</code> method is only there because the vector is mutable,
 # Vectors
 1: Declare vectors in one of the two following ways
 	<code>let vectorName = vec![];</code> OR <code>Vec::new()</code> then fill with <code>.push()</code> method
+^In the macro, the values in <code>[]</code> are the initial values of the vector, I think it is the same for <code>()</code> in <code>Vec::new</code>. Values can later be <code>.push()</code>ed to append them to the end^
 
 2: [[https://doc.rust-lang.org/stable/book/ch08-01-vectors.html|Vectors]] store multiple values but **ALL MUST** be of the **SAME** data type unlike tuples
 
