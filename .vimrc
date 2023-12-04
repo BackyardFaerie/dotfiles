@@ -56,6 +56,7 @@ call plug#begin()
 Plug 'rust-lang/rust.vim'
 Plug 'dense-analysis/ale'
 Plug 'vimwiki/vimwiki'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 
 call plug#end()
 
