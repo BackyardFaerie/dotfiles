@@ -215,3 +215,7 @@ alias sbc="source /home/fae/.bashrc"
 
 # Open Vimwiki Index
 alias vw="vim -c VimwikiIndex"
+
+# Copy STDOUT to Clipboard
+# Use as command | copy
+alias copy="xclip -sel clip"
