@@ -151,7 +151,7 @@ alias upd="sudo apt update && sudo apt upgrade"
 # My first bash script :^D
 ll ()
 {	
-	ls ${1:-"."} -lah --time-style="+%d/%m/%y %H:%M:%S"
+	ls ${1:-"."} --color -lah --time-style="+%d/%m/%y %H:%M:%S" | less -R
 }
 
 
