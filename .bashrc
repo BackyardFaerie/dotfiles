@@ -135,9 +135,12 @@ alias calc="speedcrunch"
 alias calculator="speedcrunch"
 
 # Edit i3 Config Alias
-alias i3-config="vim /home/fae/.config/i3/config"
-alias i3config="vim /home/fae/.config/i3/config"
-alias i3c="vim /home/fae/.config/i3/config"
+alias i3-config="vim ~/.config/i3/config"
+alias i3config="vim ~/.config/i3/config"
+alias i3c="vim ~/.config/i3/config"
+
+# Edit Kitty Config Alias
+alias vkc="v ~/.config/kitty/kitty.conf"
 
 # Ranger Required Envar
 export RANGER_LOAD_DEFAULT_RC=false
@@ -158,10 +161,6 @@ ll ()
 # Random Man Page
 alias randman="man $(find /usr/share/man/man1 -type f | shuf | head -1)"
 alias ranman="man $(find /usr/share/man/man1 -type f | shuf | head -1)"
-
-# Run Telegram
-alias tele="/home/fae/Telegram/Telegram"
-alias telegram="/home/fae/Telegram/Telegram"
 
 # YACReader Alias to Bypass Unnecessary Capitalisation
 alias yac="YACReader"
