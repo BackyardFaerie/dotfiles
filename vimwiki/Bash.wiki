@@ -18,4 +18,6 @@
 	<code>set -o vim</code>
 ^Starts in insert mode unlike actual Vim, use ESC as usual to go to normal mode and navigate^
 
-6: In Vim mode d0 to delete from beginning of line to cursor, d$ to delete from cursor to end of line
+6: In Vim mode d0 to delete from beginning of line to cursor, d$ to delete from cursor to end of line and dd to delete entire line
+
+7: Ctrl+J enters new line, useful for quickly going back to input if scrolled up
