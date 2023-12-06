@@ -218,3 +218,6 @@ alias vw="vim -c VimwikiIndex"
 # Copy STDOUT to Clipboard
 # Use as command | copy
 alias copy="xclip -sel clip"
+
+# Starship Required Line
+eval "$(starship init bash)"

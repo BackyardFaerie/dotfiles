@@ -1,0 +1,61 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+add_newline = false
+
+format = '$sudo$username$hostname|$directory|$rust$cmd_duration|$character'
+
+[line_break]
+disabled = true
+
+[sudo]
+disabled = false
+symbol = '\[SU\]'
+style = 'fg:red bg:grey'
+format = '[$symbol]($style)'
+
+[username]
+disabled = false
+show_always = true
+style_user = 'white'
+format = '[$user](green)@(white)'
+
+[hostname]
+ssh_only = false
+format = '[$hostname](green)'
+
+[directory]
+read_only = '[R]'
+read_only_style = 'red'
+truncation_length = 0
+format = '[$read_only]($read_only_style)[$path](bright-blue)'
+
+[character]
+success_symbol = '[\$>](bright-green bold)'
+error_symbol = '[\[ERR\]](bg:red fg:white)[ \$](red)'
+
+[rust]
+symbol = 'RUST '
+version_format = '${raw}'
+format = '[$symbol](#de7310)[$version](#de7310)|(white)'
+
+# Commit hash in prompt e.g (9a37b2)
+[git_commit]
+disabled = true
+
+[git_branch]
+disabled = true
+
+# Status of local git repo e.g modified, conflicted, ahead, behind, staged etc
+[git_status]
+disabled = true
+
+# [git_state]
+# disabled = true
+
+[package]
+disabled = true
+
+[cmd_duration]
+min_value = 0
+style = 'yellow'
+format = '[$duration]($style)'
