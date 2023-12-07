@@ -102,7 +102,7 @@ The <code>.iter_mut()</code> method is only there because the vector is mutable,
 
 3: Slices are very usually  [[https://doc.rust-lang.org/book/ch04-02-references-and-borrowing.html|borrowed references]] due to taking a known amount of memory since they are effectively just pointers
 	<code>let sliceName: &[dataType] = &[assignedValue];</code>
-^Remember that borrowed references are READ ONLY^
+^Remember that borrowed references are READ ONLY. They do not own the data and therefore cannot change it, unlike a mutable reference^
 
 #  Tuples
 1: [[https://doc.rust-lang.org/book/ch03-02-data-types.html#the-tuple-type|Tuples]] combine data types into one variable (like an array of various data types)
@@ -126,4 +126,29 @@ The <code>.iter_mut()</code> method is only there because the vector is mutable,
 3: The values of a vector are stored together in memory (in the stack?)
 	<code>data1, data2, VectorValue1, VectorValue2, VectorValue3, data3, data4...</code>
 
-4: 
+4: Strings are vectors internally, specifically of the UTF8 chars. This is opposed to &str which are references to a range of values (slice) within that vector
+
+# References
+1: When a value in memory is being referenced (e.g <code>&mut y below</code>), the current reference must dereference (with <code>*</code>) before another reference can point to the same value in memory.
+^Especially for mutable references, a mutable reference means you can have NO other references (mutable or otherwise) to the same value in memory because a mutable reference takes ownership of the data and can change it which is unexpected behaviour for any immutable references to that memory value that might exist. Normal & references do not take ownership so there can be several since they are READ ONLY as mentioned before.^ [[https://medium.com/@verbruggenjesse/getting-started-with-rust-using-rustlings-part-5-move-semantics-43dff8766b16|Useful link about moving and borrowing]]
+<code>let x = 5;
+let y = &mut x;</code> <---declaring y as var which is a mutable reference to x
+<code>y * 3 ...</code> <---doing things with y
+<code>*y</code> <---**IMPORTANT PART** dereferencing y so that there are no mutable references to x
+<code>let z = &mut x;</code> <---z becomes reference to x, this is only allowed because there can now be a mutable reference to that value in memory
+
+2: The &str (string slice) data type is a reference to a range of values within a String (which internally is a vector of the chars contained within)
+
+# References
+1: When a value in memory is being referenced (e.g <code>&mut y below</code>), the current reference must dereference (with <code>*</code>) before another reference can point to the same value in memory.
+^Especially for mutable references as only one mutable reference to a value in memory can be in effect/active at any given time^
+<code>let x = 5;
+let y = &mut x;</code> <---declaring y as var which is a mutable reference to x
+<code>y * 3 ...</code> <---doing things with y
+<code>*y</code> <---**IMPORTANT PART** dereferencing y so that there are no mutable references to x
+<code>let z = &mut x;</code> <---z becomes reference to x, this is only allowed because there can now be a mutable reference to that value in memory
+
+2: The &str (string slice) data type is a reference to a range of values within a String (which internally is a vector of the UTF8 chars contained within)
+<code>String >> (in memory) Vec1[char1, char2, char3, char4, char5]</code>
+<code>				&str >> [char3, char4, char5]</code> <---referencing only these chars (this slice) of the full vector
+
