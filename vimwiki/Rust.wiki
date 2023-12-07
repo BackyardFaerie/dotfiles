@@ -1,8 +1,25 @@
+# Functions
+1: Declare functions as below;
+<code>fn functionName(parameter1: dataType1, parameter2: dataType2) -> returnValue: dataType {
+}</code>
+^Declaring data types is optional but perhaps useful to be absolutely clear in the learning process. For <code>dataType1</code> and <code>dataType2</code> they tend to become arguments/values with the same stated/implied data type of the named parameters, such as if they are sent to the function from another one.^
+^The return value is essentially the outcome of the function's processing and can be sent, for instance, to other functions as below where <code>multiply_nums</code> has <code>x</code> and <code>y</code> as parameters, does things to them and returns the variable <code>result</code> of i32 type, <code>divide_nums</code> takes the <code>result</code> i32, does things to it and returns <code>finalNum</code> which is then taken by the <code>println!</code> macro.^
+^The <code>result</code> return value does not need to be mutable because it goes out of scope and will only be required by <code>divide_nums</code>. If the return value was required elsewhere there could only be immutable references to it assuming it was even in scope. I think being passed into <code>divide_nums</code> implicitly makes <code>result</code> mutable therefore nothing can else reference or access it as it is being mutated/modified by <code>divide_nums</code>.^
+<code>fn multiply_nums(x: i32, y: i32) -> result: i32 {
+...
+}
+
+fn divide_nums(result: i32) -> finalNum: i32 {
+...
+}
+println!("{}",finalNum);
+</code>
+
 # Variables and Constants
 1: Variables defined via
 	<code>let x = value;</code>
 
-2: All vars are immutable by default, explicit mut is required to make them mutable
+2: All vars are immutable by default, explicit <code>mut</code> is required to make them mutable
 	<code>let mut x = value;</code>
 
 3: You can **ONLY** assign values to mutable variables of the correct type e.g chars/strings cannot be assigned to integers
@@ -10,8 +27,8 @@
 	let x = 'd';</code>
 
 4: Contrary to above, immutable vars when redeclared create a new var (even in same scope) and can even be of a different data type, note as above that this is **NOT** applicable to mutable vars
-	<code>Legal		Illegal
-	let x = 5;		let mut x = 5;
+	Legal			Illegal
+	<code>let x = 5;	let mut x = 5;
 	...			...
 	let x = string;		let x = string;</code>
 Mutable vars can change **VALUE** within a scope but *NOT DATA TYPE*
@@ -19,6 +36,7 @@ In the above example, if x was redeclared as an integer it could also call the p
 are within the same scope, it _would_ be shadowing if they were in _different_ scopes. I think mutable vars are unable to be redeclared, since their value can change over time but they remain the same var in runtime where immutable vars are
 able to be redeclared since their values don't change over time so another var can be stored in runtime despite both being x to the user which would lead to this behaviour. This is different to constants because they can never change their
 value or data type in the entire program
+^I finally know why thanks to^ [[https://doc.rust-lang.org/book/ch04-01-what-is-ownership.html#stack-only-data-copy|this page]]^, certain data types like ints are stored on the STACK not the HEAP because their size is known at compile time and therefore there is an implicit <code>.copy()</code> going on so the values of x remains valid because they are NOT THE SAME VALUE IN MEMORY!!!^
 
 5: Variables are implicitly assigned a data type if no explicit type is given
 	<code>Implicit	Explicit
@@ -151,4 +169,46 @@ let y = &mut x;</code> <---declaring y as var which is a mutable reference to x
 2: The &str (string slice) data type is a reference to a range of values within a String (which internally is a vector of the UTF8 chars contained within)
 <code>String >> (in memory) Vec1[char1, char2, char3, char4, char5]</code>
 <code>				&str >> [char3, char4, char5]</code> <---referencing only these chars (this slice) of the full vector
+# Structs
+1: Rust has classic (C like), tuple and unit structs
 
+2: Declare classic struct exactly as below;
+<code>struct Name {
+varName1: dataType,
+varName2: dataType,
+varName3: dataType,
+}</code>
+^Classic structs can collate various data types together^
+
+3: Classic structs are used via instances where each data type has a value assigned to it as below;
+<code>let variablename = StructName {</code> <---Note this is not <code>struct Name</code> it is only the name of the struct since the struct keyword creates a struct
+<code>varName1: value,
+varName2: value,
+varName3: value,
+}</code>
+^Field order is irrelevant (fields are the elements of the struct). Instances of a struct can be^ <code>mut</code>
+
+4: To use only one field from a struct use dot notation as below;
+<code>structName.fieldName = value;</code>
+^Looks like method invocation minus (), is there a connection?^
+
+5: To change fields in an instance, the entire instance must be <code>mut</code> since the values are declared in the instance not the struct itself
+<code>let mut varName = structName { ... };</code>
+
+6: If the data in two instances of the same struct are the same, one will become invalid since the data is moved from one to the other as with <code>=</code> assignments. If the values are different, both instances remain valid
+
+7: Tuple structs have no field names, only data types and are declared as below;
+<code>struct structName(dataType1, dataType2, dataType3);</code>
+
+8: Tuple struct fields are accessed via their index in <code>()</code>, as opposed to the <code>{}</code> of classic structs as below
+<code>struct structName(u8, u8, u8);
+let instanceName = structName(0, 255, 31);</code> <---the indices here correspond, where index 0 is assigned the value 0, index 1 is 255 and index 2 is 31
+
+9: Each struct has its own type regardless of the data types contained within, practically this means that a function which takes one struct as a parameter cannot take another struct as an argument even if both structs have the same data types contained within
+Legal							Illegal
+<code>fn does_thing(fieldName3: String) -> String {}	fn does_other_thing(fieldName3: struct2) -> i32 {}</code>
+^The format is fn functionName(parameter: argument). The argument is the concrete value of the parameter, like how a struct has a field (parameter) and a value (argument)^
+
+10: Unit structs carry no data but do carry traits and are useful to apply desired traits to a var (I think, not on traits yet)
+<code>struct unitStructName;</code> <---create unit struct
+<code>let varName = unitStructName;</code> <---instance
