@@ -2,7 +2,7 @@
 
 add_newline = false
 
-format = '$sudo$username$hostname|$directory|$rust$cmd_duration|$character'
+format = '$sudo$username@$hostname|$directory|$rust$cmd_duration|$character'
 
 [line_break]
 disabled = true
@@ -17,7 +17,7 @@ format = '[$symbol]($style)'
 disabled = false
 show_always = true
 style_user = 'white'
-format = '[$user](green)@(white)'
+format = '[$user](green)(white)'
 
 [hostname]
 ssh_only = false
