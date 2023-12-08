@@ -14,7 +14,22 @@ fn divide_nums(result: i32) -> finalNum: i32 {
 }
 println!("{}",finalNum);
 </code>
+2: Functions implicity deallocate memory at the end of their scope by running a <code>.drop()</code>
+<code>fn name() -> i32 {
+...
+} .drop()</code> <---implied, not explicitly included by programmer
 
+3: Send values to other functions in the format <code>otherFunctionName(sentData)</code> as below;
+<code>fn first_function(var1: i32) -> i32 {
+let s = String::from("hello");
+second_function(s);
+}
+
+fn second_function(s: &String) -> usize {
+let bytes = s.as_bytes();
+println!("{:?}", bytes);
+}
+</code>
 # Variables and Constants
 1: Variables defined via
 	<code>let x = value;</code>
@@ -23,6 +38,7 @@ println!("{}",finalNum);
 	<code>let mut x = value;</code>
 
 3: You can **ONLY** assign values to mutable variables of the correct type e.g chars/strings cannot be assigned to integers
+	Illegal
 	<code>let mut x = 5;
 	let x = 'd';</code>
 
@@ -37,6 +53,7 @@ are within the same scope, it _would_ be shadowing if they were in _different_ s
 able to be redeclared since their values don't change over time so another var can be stored in runtime despite both being x to the user which would lead to this behaviour. This is different to constants because they can never change their
 value or data type in the entire program
 ^I finally know why thanks to^ [[https://doc.rust-lang.org/book/ch04-01-what-is-ownership.html#stack-only-data-copy|this page]]^, certain data types like ints are stored on the STACK not the HEAP because their size is known at compile time and therefore there is an implicit <code>.copy()</code> going on so the values of x remains valid because they are NOT THE SAME VALUE IN MEMORY!!!^
+^As an additional complexity, immutable ints are stored on the stack but mutable vars (including ints) are stored on the heap since they can be reallocated and therefore their size cannot be known at compile time meaning they cannot be on the stack^
 
 5: Variables are implicitly assigned a data type if no explicit type is given
 	<code>Implicit	Explicit
