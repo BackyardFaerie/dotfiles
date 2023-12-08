@@ -30,6 +30,8 @@ let bytes = s.as_bytes();
 println!("{:?}", bytes);
 }
 </code>
+4: Methods are shorthand for functions being applied to the value before the <code>.</code>, such as <code>var.do_things()</code> where <code>do_things</code> is a user defined function elsewhere in the code/file. Another example is <code>.copy()</code> which is referring to a function made by the Rust devs and put into the standard library.
+
 # Variables and Constants
 1: Variables defined via
 	<code>let x = value;</code>
@@ -213,7 +215,7 @@ varName3: value,
 <code>let mut varName = structName { ... };</code>
 
 6: If the data in two instances of the same struct are the same, one will become invalid since the data is moved from one to the other as with <code>=</code> assignments. If the values are different, both instances remain valid
-
+^Need to check this again, how can data become invalid if it can copy from another struct with struct update syntax as shown below? Maybe the update syntax makes a copy rather than pointing to identical data? I remain confused on this point^
 7: Tuple structs have no field names, only data types and are declared as below;
 <code>struct structName(dataType1, dataType2, dataType3);</code>
 
@@ -229,3 +231,60 @@ Legal							Illegal
 10: Unit structs carry no data but do carry traits and are useful to apply desired traits to a var (I think, not on traits yet)
 <code>struct unitStructName;</code> <---create unit struct
 <code>let varName = unitStructName;</code> <---instance
+
+11: Structs can copy data from others using <code>..firstStructName</code>. This applies the values from the named struct to the rest of the fields not explicitly defined in the second instance as below;
+Creating struct
+<code>struct firstStruct {
+name: String,
+age: u8,
+email: String,
+}</code>
+First instance
+<code>fn some_function() {
+let firstInstance = firstStruct {
+	name: aName,
+	age: numYears,
+	email: String::from("fakeemail@protonmail.com")
+	};
+}</code>
+Second instance, copying age and email values from firstInstance, note no comma at end of line
+<code>fn some_other_function() {
+	let structUpdate = firstStruct; {
+	name: String::from("differentName"),
+	..firstInstance
+	};
+}</code>
+
+# Enums
+1: Enums are a data type that enumerate possible values, an enum is used where the same data type needs to be grouped together (structs are more for varying data types grouped together). Enums search through mutually exclusive possibilities.
+^Example: An enum would be used to determine if a char is a digit or not since the char either is or is not a digit. The char cannot be a digit and also not simultaneously. This is different from boolean values since they only return true/false but enums can return the actual value, in this case the char. Importantly, the iterates through the options and enumerates them, only returning the digits if that is the desired and implemented logic.^
+
+2: Enums are created as below, where each line is a different mutually exclusive option (variant);
+<code>enum enumName {
+variant1,
+variant2,
+variant3,
+}
+</code>
+3: Enums can be invoked in functions, methods and structs as shown [[https://doc.rust-lang.org/book/ch06-01-defining-an-enum.html#enum-values|here]].
+<code>let variable = enumName::variantName;
+fn func_name(parameter: enumName)</code>
+
+4: The function example above can be called, passing any possible enum variant to it as below;
+<code>func_name(enumName::variantName);</code>
+
+5: Enums can have data types associated with each variant as below;
+<code> enum enumName {
+variant1(dataType),
+variant2(dataType2),
+variant3{namedField1: dataType, namedField2: dataType2}
+}
+
+enum enumName2 {
+variant1(u8, u8, u8),
+variant2(String),
+variant3{x: u8, y: u8},
+variant4(structDefinedElsewhere)
+}
+</code>
+^Note the <code>{}</code> for the named fields, I believe that is creating an anonymous struct (struct without a name)^
