@@ -32,6 +32,14 @@ println!("{:?}", bytes);
 </code>
 4: Methods are shorthand for functions being applied to the value before the <code>.</code>, such as <code>var.do_things()</code> where <code>do_things</code> is a user defined function elsewhere in the code/file. Another example is <code>.copy()</code> which is referring to a function made by the Rust devs and put into the standard library.
 
+5: Multiple vars can be sent to a function simultaneously as below ^(this is a tuple)^
+<code>let (var1, var2) = function(signature values);
+let (string, file) = parse(&str);</code>
+
+6: Functions can return multiple values, grouped together as below (this is a tuple)
+<code>fn parse(args: &[String]) -> (&str, &str) {
+}</code>
+
 # Variables and Constants
 1: Variables defined via
 	<code>let x = value;</code>
@@ -65,7 +73,7 @@ value or data type in the entire program
 	<code>println!("Some words {}, x);</code> or <code>println!("x is equal to {x}");</code>
 I think the println macro is a function here judging by the () meaning maybe the {} is a scope or maybe it is to give the compiler a place to assign the var like an array or something but I'm not sure
 
-7: Redeclaring a var of the same name within the same scope is allowed, it creates another var of the same name with a different value **ONLY** if neither is mut (What? This is confusing and something to look into further, maybe they take up different locations in memory?)
+7: Redeclaring a var of the same name within the same scope is allowed, it creates another var of the same name with a different value **ONLY** if neither is mut (What? This is confusing and something to look into further, I think they take up different locations in memory)
 	Legal
 <code>	let x = 5;
 	...
@@ -86,6 +94,9 @@ I think the println macro is a function here judging by the () meaning maybe the
 	...
 	}
 </code>^Borrowed references are READ ONLY meaning no operations other than reading can be performed on them^
+
+11: Multiple vars can be sent to the same function simultaneously as below ^(this is a tuple)^
+<code>let (search, file) = parse(&args);</code>
 
 # Scope
 1: Scope is generally anything contained within {}
@@ -255,6 +266,21 @@ Second instance, copying age and email values from firstInstance, note no comma 
 	};
 }</code>
 
+12: Structs can be used in implement blocks and house functions as below
+<code>struct Name {
+}
+
+impl Name {
+fn function3(word: String, num: i32) -> (String, i32) {
+	...
+	}
+}</code>
+^Not sure why you would do this, need to read more on impl blocks^
+
+13: Functions within implement blocks are invoked (such as in a different function) as below
+<code>structName::functionName(arguments to function)</code>
+^This looks like the <code>std::io</code> and <code>std::fs</code> syntax, are libraries impl blocks with various functions within that are associated with them? That's something to look into^
+
 # Enums
 1: Enums are a data type that enumerate possible values, an enum is used where the same data type needs to be grouped together (structs are more for varying data types grouped together). Enums search through mutually exclusive possibilities.
 ^Example: An enum would be used to determine if a char is a digit or not since the char either is or is not a digit. The char cannot be a digit and also not simultaneously. This is different from boolean values since they only return true/false but enums can return the actual value, in this case the char. Importantly, the iterates through the options and enumerates them, only returning the digits if that is the desired and implemented logic.^
@@ -288,3 +314,22 @@ variant4(structDefinedElsewhere)
 }
 </code>
 ^Note the <code>{}</code> for the named fields, I believe that is creating an anonymous struct (struct without a name)^
+
+# [[https://doc.rust-lang.org/book/ch09-02-recoverable-errors-with-result.html|Error Handling]]
+1: The <code>panic!("Panic text");</code> macro is used for programmer/debugging messages
+2: The syntax below handles errors for end users. Here <code>main</code> sends data to <code>otherFunction</code> which runs its logic and if the requirements for the <code>return Err</code> statement are true it returns an error value back to <code>main</code>. The error returns could be placed in <code>if {}</code> blocks so that if the conditions for an expected error are met, the user gets a message notifying them of such. ^Note the <code><ok return, error return</code> syntax ordering for the <code>Result</code> return value. In actual code, both of these would be data types/named variables like normal return values.^
+<code>use std::process;
+
+fn main() {
+	let x = whateverXIsEqualTo.unwrap_or_else(|err| {println!("optional error message prefix {}", err);
+		process::exit(1);
+		});
+...
+}
+
+fn otherFunction() -> Result<ok return, error return> {
+...
+return Err("error text");
+Ok(return values)
+}</code>
+^Note that <code>std::process</code> is needed, the line in <code>main</code> prints the error message on the <code>else</code> part of the <code>.unwrap_or_else()</code> method, printing the inner value of <code>Err</code> in <code>()</code> and exits the program with exit code 1, a non-zero exit code which is sent to the OS and therefore read as an error. If there was no error the <code>unwrap</code> part of the method would run the inner value of <code>Ok</code> within <code>()</code>.^
