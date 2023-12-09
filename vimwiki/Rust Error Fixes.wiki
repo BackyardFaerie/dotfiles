@@ -1,3 +1,6 @@
 # E0382
 Cause: Value borrow and move issue. Usually for Strings. Strings do not have <code>.clone()</code> Trait meaning they must be borrowed but a var cannot be borrowed to two places at once. The first use of the var needs to be returned/completely finished processing before another borrow can occur.
-Fixes: Check order of lines, move <code>&</code> refs to be first, especially if they are going to another function. Make sure the function has completely returned the value back to the parent function of where the issue is.
+
+Fixes:
+1: Check order of lines, move <code>&</code> refs to be first, especially if they are going to another function. Make sure the function has completely returned the value back to the parent function of where the issue is (e.g <code>func2{}</code> back to <code>main{}</code>).
+2: If using Strings, <code>.clone()</code> can be explicitly used but keep in mind that this doubles the memory cost of that String. Consider fix 1 first for optimisation.
