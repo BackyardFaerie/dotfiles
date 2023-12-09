@@ -1,5 +1,6 @@
 # Programming
 [[Rust]] 
+[[Rust Error Fixes]]
 
 # Program Specific Reminders
 [Vim](Vim)
