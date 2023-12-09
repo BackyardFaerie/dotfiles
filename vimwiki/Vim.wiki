@@ -7,3 +7,10 @@
 	
 3: Decrypt file within Vim when accessing file
 	<code>:set key=</code> <---blank after = to make passkey nothing
+	
+4: Open file in split
+	<code>Ctrl+W gf</code>
+	
+5: Open file in vertical split
+	<code>Ctrl+W vgf</code>
+
