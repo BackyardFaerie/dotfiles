@@ -316,6 +316,7 @@ variant4(structDefinedElsewhere)
 ^Note the <code>{}</code> for the named fields, I believe that is creating an anonymous struct (struct without a name)^
 
 # [[https://doc.rust-lang.org/book/ch09-02-recoverable-errors-with-result.html|Error Handling]]
+## This entire section needs to be reworked, I am still in the process of learning about error handling
 1: The <code>panic!("Panic text");</code> macro is used for programmer/debugging messages
 2: The syntax below handles errors for end users. Here <code>main</code> sends data to <code>otherFunction</code> which runs its logic and if the requirements for the <code>return Err</code> statement are true it returns an error value back to <code>main</code>. The error returns could be placed in <code>if {}</code> blocks so that if the conditions for an expected error are met, the user gets a message notifying them of such. ^Note the <code><ok return, error return</code> syntax ordering for the <code>Result</code> return value. In actual code, both of these would be data types/named variables like normal return values.^
 <code>use std::process;
