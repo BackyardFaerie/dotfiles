@@ -14,3 +14,9 @@
 5: Open file in vertical split
 	<code>Ctrl+W vgf</code>
 
+6: Jump down/up between line wrap
+	<code>gj/gk</code>
+	
+7: Open new file in different buffer (open 2+ files simultaneously)
+	<code>:ed filename/path</code>
+^Where the path is needed if it is different from the currently open file (e.g ../file_in_parent_dir)^
