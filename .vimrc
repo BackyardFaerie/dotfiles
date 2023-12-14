@@ -51,6 +51,8 @@ set cursorline
 "noremap k j|noremap <C-w>k <C-w>j|noremap <C-w><C-k> <C-w>j
 "noremap j k|noremap <C-w>j <C-w>k|noremap <C-w><C-j> <C-w>k
 
+set foldmethod=manual
+
 call plug#begin()
 
 Plug 'rust-lang/rust.vim'
