@@ -177,8 +177,8 @@ alias moddir="cd /home/fae/game-ssd/ffxiv-mods/"
 alias modd="cd /home/fae/game-ssd/ffxiv-mods/"
 alias cd-mods="cd /home/fae/game-ssd/ffxiv-mods/"
 
-# Move All TTMP/TTMP2 Files to ffxiv-mods/
-alias modmv="mv -v ~/Downloads/*.{ttmp,ttmp2} ~/game-ssd/ffxiv-mods/"
+# Move All TTMP/TTMP2 Files to ffxiv-mods/ and Append Moved Item Names to the to-install File
+alias modmv="ls ~/Downloads | grep 'ttmp\|ttmp2\|pmp' >> ~/game-ssd/ffxiv-mods/to-install && mv -v ~/Downloads/*.{ttmp,ttmp2,pmp} ~/game-ssd/ffxiv-mods/"
 
 # Launch PCSX2
 alias pcsx2="flatpak run net.pcsx2.PCSX2"
@@ -221,3 +221,13 @@ alias copy="xclip -sel clip"
 
 # Starship Required Line
 eval "$(starship init bash)"
+
+# Run I/O Revision II
+# This command is purely for convenience and so I don't accidentally forget the WINE prefix
+alias ior2="WINE_PREFIX=/home/fae/game-ssd/io-revision-ii/ LC_ALL="ja_JP" wine /home/fae/game-ssd/io-revision-ii/io_r2_en.exe"
+
+# Run Final Fantasy XI HorizonXI Launcher
+alias ffxi="WINEPREFIX=/home/fae/game-ssd/ffxi wine /home/fae/game-ssd/ffxi/HorizonXI-Launcher-1.2.4.Setup.exe"
+
+# Run discord-screenaudio Flatpak
+alias discord-screenaudio="flatpak run de.shorsh.discord-screenaudio"
