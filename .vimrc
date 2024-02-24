@@ -30,8 +30,8 @@ augroup numtoggle
 	autocmd BufLeave,FocusLost,InsertEnter,WinLeave * if &nu | set nornu | endif
 augroup END
 
-"Set Title to vim-filename
-set titlestring=vim-%t
+"Set Title to filename
+set titlestring=%f
 set title
 
 "Display Cursor Position
