@@ -231,3 +231,6 @@ alias ffxi="WINEPREFIX=/home/fae/game-ssd/ffxi wine /home/fae/game-ssd/ffxi/Hori
 
 # Run discord-screenaudio Flatpak
 alias discord-screenaudio="flatpak run de.shorsh.discord-screenaudio"
+
+# Print ncal with Monday as first day
+alias mcal="ncal -M"
