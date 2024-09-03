@@ -1,0 +1,5 @@
+1: Fully Qualified Commands
+Provide the full command path in scripts
+Use `/usr/bin/echo "text"` instead of `echo "text"`
+^This is because the `$PATH` var can be different for different distros, shell instances and generally full paths make the script more explicit and easier to debug^
+^Having another program called `echo` for instance, can also perform any action which might be nefarious. Specifying the `/usr/bin` path reduces the chances of the script using the wrong commands^
