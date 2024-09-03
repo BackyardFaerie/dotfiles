@@ -20,3 +20,21 @@
 7: Open new file in different buffer (open 2+ files simultaneously)
 	<code>:ed filename/path</code>
 ^Where the path is needed if it is different from the currently open file (e.g ../file_in_parent_dir)^
+
+8: Tabs
+	A: Open new file in new tab
+	`:tabnew $filename`
+	B: Edit existing file in new tab
+	`:tabedit $filename`
+	C: Switch to next tab
+	`gt`
+	D: Switch to previous tab
+	`gT`
+
+9: Clear Search Highlighting
+	`:noh`
+^This does not disable highlighting globally, just until the next search^
+
+10: VimWiki Open in Current/New Tab
+	`\ww` | open in current tab
+	`\wt` | open in new tab
