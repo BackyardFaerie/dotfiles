@@ -154,9 +154,8 @@ alias upd="sudo apt update && sudo apt upgrade"
 # My first bash script :^D
 ll ()
 {	
-	ls ${1:-"."} --color -lah --time-style="+%d/%m/%y %H:%M:%S" 
+	ls "$@" "${1:-"."}" --color -lah --time-style="+%d/%m/%y %H:%M:%S"
 }
-
 
 # Random Man Page
 alias randman="man $(find /usr/share/man/man1 -type f | shuf | head -1)"
@@ -234,3 +233,7 @@ alias discord-screenaudio="flatpak run de.shorsh.discord-screenaudio"
 
 # Print ncal with Monday as first day
 alias mcal="ncal -M"
+
+# Run DRAMAtical Murder
+
+alias dmmd="cd /home/fae/game-ssd/dramatical-murder/drive_c/Program\ Files\ \(x86\)/DRAMAtical\ Murder/DRAMAtical\ Murder && WINEPREFIX=/home/fae/game-ssd/dramatical-murder LANG=ja_JP.utf8 wine /home/fae/game-ssd/dramatical-murder/drive_c/Program\ Files\ \(x86\)/DRAMAtical\ Murder/DRAMAtical\ Murder/DMMd.exe"
