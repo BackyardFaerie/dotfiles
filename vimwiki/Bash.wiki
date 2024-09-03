@@ -4,6 +4,7 @@
 	
 2: ! can search previous commands via string as below
 	<code>!ap</code> <---would run <code>apt update</code> assuming there were no other commands starting with <code>ap</code> more recently (like <code>apt-search cache</code>)
+	<code>!!</code> is a shortcut to run the most recent command (equal to <code>!-1</code>)
 	
 3: Caret can be used to replace text (e.g fix spelling mistake) or run the same command in the same dir but a slightly different option
 	<code>apt updtae
@@ -21,3 +22,202 @@
 6: In Vim mode d0 to delete from beginning of line to cursor, d$ to delete from cursor to end of line and dd to delete entire line
 
 7: Ctrl+J enters new line, useful for quickly going back to input if scrolled up
+
+8: Declare variables with <code>var_name=value</code>
+^Example: <code>name="Brian"</code> or <code>dir=$(pwd)</code>^
+Unassign variables with `unset var_name`
+
+
+9: In scripts <code>'$var'</code> and <code>"$var"</code> print the value the var contains but <code>$var</code> (such as <code>echo $var</code>) prints only the var name not the value
+^Note that if the var starts a subshell (see below) it will still print the output of the subshell command even with <code>echo $var</code> syntax^
+
+10: Vars containing <code>$()</code> create subshells and can store the output of commamnds within them
+^Subshell commands will be performed BEFORE the rest of the line, like mathematical order of operations e.g `(3+3)*2-4=8 not -36`^
+^Example: <code>var_name=$(ls)</code> where the output of <code>echo $var_name</code> will be the same as the output of <code>ls</code>^
+^The <code>$</code> declares the value is a variable^
+
+11: Variables are blank unless allocated
+^Env vars count as already being allocated, e.g <code>$USER</code>, <code>$SHELL</code> and <code>$HOME</code>^
+
+12: Performing arithmetic may require use of <code>expr</code>, <code>expr</code> can also take vars e.g <code>expr $int1 + $int4</code>
+Example: <code>30 + 10</code> is *INVALID* but <code>expr 30 + $int4</code> gives the correct answer of 40 (assuming <code>int4=10</code> was declared previously)
+^This is likely (aka I think it is because) Bash takes the values as arguments to the original command^
+^Note that <code>*</code> does NOT work for multiplication as it is interpreted as wildcard even by <code>expr</code>^
+^<code>*</code> must therefore be escaped as a special char with <code>\*</code>, as with whitespace etc^
+^More standard `<=`, `==`, `>=`, `<` and `>` syntax can be used in `(())` since that is for shell arithmetic. See below for explanation^
+
+13: If and If Else statements begin with <code>if [ test-case ]</code>
+^The <code>[ ]</code> implicitly execute the <code>test</code> command and `if` statement, they are not needed if <code>test</code> is not being used such as with <code>command -v</code>^
+^See <code>man test</code> for more information on this and the comparators below (<code>-eq</code>, <code>-lt</code> etc)^
+^Use of `[]` is only one option, see below for details on `()` vs `(())` vs `[]` vs `[[]]`^
+^Use of brackets is not required either, the output of a command can also be used e.g `if grep -q "Debian" $os-release`^
+Syntax is a bit different to something like Rust, checking for a value being equal is not <code>$var = value</code>, instead it is <code>$var -eq value</code> and <code>if</code> statements must be ended with <code>fi</code>
+Example: <code>if [$variable -eq value ]
+then
+	foo
+else
+	fizz
+fi</code>
+
+14: Invert test case with the following syntax <code>if [ ! $var -eq value ] fi</code> (though <code>-ne</code> instead of <code>-eq</code> would be a better way to write that)
+
+15: If test case comparators
+<code>-eq</code> | == equal to (ints)
+<code>-ne</code> | != not equal to (ints)
+<code>-gt</code> | > greater than (ints)
+<code>-lt</code> | < less than (ints)
+<code>-f</code>  | File presence Boolean. Requires providing file within test case of <code>if</code> statement's <code>[]</code> as <code>if [ -f ~/test/dir/file.sh ]</code>
+<code>-d</code>  | Directory presence Boolean. Same restrictions as <code>-f</code> above
+<code>-v</code>  | Use with <code>command</code> to verify if a command exists and locate its binary
+
+16: Chaining operators work in Bash scripts (<code>&&</code> and <code>||</code> etc)
+
+17: Exit Codes
+Print most recent exit code with <code>echo $?</code> in scripts or interactive shell
+<code>0</code> | No errors, successful execution
+<code>1</code> | Generic error (div 0, missing operand, permission issues etc)
+<code>2</code> | Improper command use (missing keyword, non-existant/not found file/dir)
+<code>127</code> | Path resolution issue/command not found
+<code>130</code> | Fatal error, interrupt received via Ctrl+C
+<code>255</code> | Exit code exceeds 8 bit exit code value
+
+^Exit codes can be used in <code>if</code> statements etc^
+^Writing logic for non-zero exit codes counts as handling so <code>$?</code> becomes 0 which is useless for error tracking after an <code>echo</code> for example since the <code>echo</code> had <code>0</code> exit code.^
+^ALWAYS test with invalid inputs to make sure scripts run^
+Example:
+<code>if [ $? -eq 0 ]
+then
+	echo "Success, bin dir is:"
+	which $program-name
+else
+	echo "Fail"
+fi
+</code>
+^Remember `/dev/null` file can be used to discard output^
+Example: <code>apt install $package > /dev/null</code>
+
+Using <code>exit [u8]</code> allows for control over exit codes
+Example:<code>exit 42</code>
+^This will EXIT the script with the user defined exit code at that line and following commands (e.g <code>echo $?</code>) will not be run^
+^This can be useful, for instance creating exit codes of <code>256</code>-<code>999</code> at various <code>if then else</code> statements to spot exactly when a script failed^
+
+19: While loops follow the syntax of <code>if</code> statements
+^While loops should be used for potentially infinite/unknown length sets to iterate over (e.g vectors)^
+`while [ ... ]
+do
+...
+done`
+
+^While loop test cases follow the same syntax and options as <code>if</code>^
+^For multiple conditions, using `||` and `&&` is not correct since (I think) the second condition is ignored, instead `|` is used to (I think) pipe the result of condition 1 into condition 2 for further testing. More research needed on this front^
+^Using `(($i--))` does not appear to work but `int=$(( $int - 1 ))` does, counterintuitively `(($i++))` does work. Perhaps `(($i--))` is just not supported?^
+
+20: `()` vs `(())` vs `[]` vs `[[]]`
+`(( ))` | Arithmetic construct. See Bash manual Section 6.5 Shell Arithmetic for operators (can accept vars e.g `/usr/bin/echo "Line count = $(($lines+3))"` )
+`( )`   | Subshell, run commands within the brackets as normal
+`[ ]`   | Legacy conditional construct. See Bash manual Section 6.4 Conditional Expressions
+`[[ ]]` | Equal to `[ ]` but words are *NOT* split and globs are *NOT* expanded. `==` can perform pattern matching and `=~` allows for regex matching (generally `[[]]` matches strings where `[]` matches nums)
+
+21: For Loops
+A: Iterate over an array 
+B: Begin with a declaration of the var then the set
+C: Break from the loop once the set has been completely iterated over
+^D: Should generally be used for a known and/or finite number of iterations^
+For loops 
+`for current_num in {1..10}
+do
+[logic]
+done`
+The above example will iterate over the set of `{1..10}` with `$current_num` incrementing by 1 for each loop until 10 is reached (this is basically `for int in [array elements] i++`)
+`{}` is probably how Bash denotes arrays
+^Can use `file` to search for files matching certain patterns and use regex, e.g `for file in logfiles/*.log`^
+^Bash uses spaces to separate elements in an array^
+
+22: Scripts can be moved to `/usr/local/bin` (defined with `$PATH`) to be found by `which` and executable in subshells
+^Think of `$` in interactive Bash prompt, that might be because every command issued is processed as a subshell of the main shell instance in the terminal emulator (don't know if this is correct but it makes sense)^
+
+23: Data Streams (`stdin`, `stdout` and `stderr`)
+`stdin`  | 
+`stdout` | Output of a command printed to screen which is not an error (e.g output of `ls -lah`, exit code of `0`)
+`stderr` | Error output/non-zero exit code
+^Output can consist of `stdout` AND `stderr` depending on the outcome e.g `find /etc -type f` where successfully found files are `stdout` but permission issues result in `stderr`^
+^Output locations can be controlled, e.g appending `2> /dev/null` to the previous `find` to put `stderr` output into `/dev/null`^
+In the above example, ^ANY line that goes to `stderr` is redirected to `/dev/null`^
+Using `>` redirects the specified data streams but if no data stream is specified, `stdout` is the assumed default. This means that `find /etc -type f > /dev/null` prints ONLY `stderr` since it defaults to being printed but `stdout` is redirected to `/dev/null`
+
+Data Stream Redirect Table
+`1` | Implied with only `>`, `stdout`
+`2` | Not implied, must be explicitly stated, `stderr`
+`&` | Refers to both `stdout` and `stderr`, both will go to the same redirected location
+
+To redirect `stdout` and `stderr` separately, append as follows (again, `1>` is implied with `>`)
+`foo -bar >~/stdout-results.txt 2>~/stderr-results.txt`
+
+User input can be processed as follows
+`read varname`
+This allows text entry and the `varname` can be manipulated as any var can e.g `echo $varname`. How data types work (strings, ints, floating point) is uncertain. Something to research
+
+24: Functions
+Declared as 
+`code funcname() {
+}`
+^Functions are compartmentalised code blocks that can be called like vars to save on repetition and make updating and maintaining scripts easier^ (this is useful to keep in mind generally e.g for Rust)
+
+Call function by stating its name
+`foo
+funcname
+bar`
+
+25: Case Statements
+Can be used to take user input
+Declared via:
+`case $var in
+1) Case 1;;
+2) Case 2;;
+3) Case 3;;
+4) Catchall;;
+esac`
+In above example, `1)`, `2)`, `3)` etc correlate to value stored in `$var` associated with the case (e.g if case is preceded by `read $var` and user enters 1, case 1 will occur)
+The `*` is used as a wildcard to catch all other cases (in this example, 4+ or invalid input like h)
+
+26: Chaining Commands in Terminal and Scripts
+Command1 [operator] Command2
+`&&` | Run Command2 only if Command1 produced exit code 0 (opposite of `||`, think logical AND)
+`;`  | Run Command2 unconditionally, no matter what Command1's exit code was
+`||` | Run if Command1 exited with any non-zero exit code (opposite of `&&`, think logical OR)
+`&` | Run both in parallel, Command1 in background and Command2 in foreground
+
+27: Scheduling Jobs (Using `at`)
+Use `at` (not installed by default) to schedule jobs. Specify when to run a job with syntax below
+`at [date/24 hour time] -f ./script-name.sh`
+The `-f` specifies to run a file, the next argument
+^Recommended to give absolute path instead in case of shell and/or scripts being in different dirs^
+Using `atq` shows queue of upcoming jobs, number in queue and when they will execute
+Using `atrm [job number]` removes the specified job number
+Dates are specified numerically with no separator in MMDDYY format (011225 == 12/1/25 NOT 1/12/25)
+
+28: Using `cron` allows for scheduling of jobs
+`cron -e` | Edits a cronfile in `/tmp` with `$EDITOR`
+^Without using `sudo`, `crontab` jobs will run (and the cronfile will be edited for) the current user (unless user is specified with `-u username` argument^
+`Cron` jobs run at certain times and reoccur, e.g `30 2 foo bar` (`cron` jobs follow specific template) will run at 2:30 every morning since m=30 and h=2
+`Cron` format is as follows: (m)inute (h)our (d)ay-(o)f-(m)onth (mon)th (d)ay-(o)f-(w)eek command
+Examples:
+`12 20 13 * * /usr/bin/date` | Prints date at 20:12 on 13th of every month, regardless of day
+`12 20 * * 5 /usr/bin/date` | Prints date at 20:12 every Friday, regardless of month
+`12 20 6 4 2 /usr/bin/date` | Prints date at 20:12 on every 6th of April but only if it is a Tuesday
+`15 * * * * /usr/bin/date` | Prints date every fifteen minutes regardless of hour, day, date and/or month
+
+29: Arguments
+Format `command -arg1 -arg2 -arg3`
+`$1` | First argument of issued command (continues with `$2`, `$3`, `$4` etc)
+
+30: Special Parameters
+See Bash `man` page `Parameters: Special Paramaters` section for more information
+`$?` | Exit code of most recent foreground task
+`$@` | Equivalent to `"$1" "$2" "$3"`, expands to separate words (I think it is accepted as one argument then? e.g directory names with spaces being understood as "word1 word2" not "word1" "word2")
+`$#` | Number of arguments provided to most recent command
+`$1` | First argument (continues with `$2`, `$3`, `$4` etc)
+`$-` | Lists set option flags of the current shell
+`$*` | Expands like `$@` but expands into separate words (I think)
+`$$` | PID of script (or current shell if in interactive mode)
+
