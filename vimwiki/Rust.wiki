@@ -1,7 +1,5 @@
 # Functions
-1: Declare functions as below;
-<code>fn functionName(parameter1: dataType1, parameter2: dataType2) -> returnValue: dataType {
-}</code>
+1: Declare functions as below; <code>fn functionName(parameter1: dataType1, parameter2: dataType2) -> returnValue: dataType {}</code>
 ^Declaring data types is optional but perhaps useful to be absolutely clear in the learning process. For <code>dataType1</code> and <code>dataType2</code> they tend to become arguments/values with the same stated/implied data type of the named parameters, such as if they are sent to the function from another one.^
 ^The return value is essentially the outcome of the function's processing and can be sent, for instance, to other functions as below where <code>multiply_nums</code> has <code>x</code> and <code>y</code> as parameters, does things to them and returns the variable <code>result</code> of i32 type, <code>divide_nums</code> takes the <code>result</code> i32, does things to it and returns <code>finalNum</code> which is then taken by the <code>println!</code> macro.^
 ^The <code>result</code> return value does not need to be mutable because it goes out of scope and will only be required by <code>divide_nums</code>. If the return value was required elsewhere there could only be immutable references to it assuming it was even in scope. I think being passed into <code>divide_nums</code> implicitly makes <code>result</code> mutable therefore nothing can else reference or access it as it is being mutated/modified by <code>divide_nums</code>.^
@@ -14,7 +12,7 @@ fn divide_nums(result: i32) -> finalNum: i32 {
 }
 println!("{}",finalNum);
 </code>
-2: Functions implicity deallocate memory at the end of their scope by running a <code>.drop()</code>
+2: Functions implicitly deallocate memory at the end of their scope by running a <code>.drop()</code>
 <code>fn name() -> i32 {
 ...
 } .drop()</code> <---implied, not explicitly included by programmer
@@ -30,7 +28,8 @@ let bytes = s.as_bytes();
 println!("{:?}", bytes);
 }
 </code>
-4: Methods are shorthand for functions being applied to the value before the <code>.</code>, such as <code>var.do_things()</code> where <code>do_things</code> is a user defined function elsewhere in the code/file. Another example is <code>.copy()</code> which is referring to a function made by the Rust devs and put into the standard library.
+4: Methods are shorthand for functions being applied to the value before the <code>.</code>, such as <code>var.do_things()</code> where <code>do_things</code> is a user defined function elsewhere in the code/file.
+^Another example would be <code>.copy()</code> which is referring to a function made by the Rust devs and put into the standard library.^
 
 5: Multiple vars can be sent to a function simultaneously as below ^(this is a tuple)^
 <code>let (var1, var2) = function(signature values);
@@ -62,7 +61,8 @@ In the above example, if x was redeclared as an integer it could also call the p
 are within the same scope, it _would_ be shadowing if they were in _different_ scopes. I think mutable vars are unable to be redeclared, since their value can change over time but they remain the same var in runtime where immutable vars are
 able to be redeclared since their values don't change over time so another var can be stored in runtime despite both being x to the user which would lead to this behaviour. This is different to constants because they can never change their
 value or data type in the entire program
-^I finally know why thanks to^ [[https://doc.rust-lang.org/book/ch04-01-what-is-ownership.html#stack-only-data-copy|this page]]^, certain data types like ints are stored on the STACK not the HEAP because their size is known at compile time and therefore there is an implicit <code>.copy()</code> going on so the values of x remains valid because they are NOT THE SAME VALUE IN MEMORY!!!^
+^I finally know why thanks to^ [[https://doc.rust-lang.org/book/ch04-01-what-is-ownership.html#stack-only-data-copy|this page]]^, certain data types like ints are stored on the STACK not the HEAP because their size is known at compile time and therefore^
+^there is an implicit <code>.copy()</code> going on so the values of x remains valid because they are NOT THE SAME VALUE IN MEMORY!!!^
 ^As an additional complexity, immutable ints are stored on the stack but mutable vars (including ints) are stored on the heap since they can be reallocated and therefore their size cannot be known at compile time meaning they cannot be on the stack^
 
 5: Variables are implicitly assigned a data type if no explicit type is given
@@ -300,11 +300,11 @@ fn func_name(parameter: enumName)</code>
 <code>func_name(enumName::variantName);</code>
 
 5: Enums can have data types associated with each variant as below;
-<code> enum enumName {
-variant1(dataType),
-variant2(dataType2),
-variant3{namedField1: dataType, namedField2: dataType2}
-}
+    <code>enum enumName {
+    variant1(dataType),
+    variant2(dataType2),
+    variant3{namedField1: dataType, namedField2: dataType2}
+    }
 
 enum enumName2 {
 variant1(u8, u8, u8),
