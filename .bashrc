@@ -154,7 +154,11 @@ alias upd="sudo apt update && sudo apt upgrade"
 # My first bash script :^D
 ll ()
 {	
-	ls "$@" "${1:-"."}" --color -lah --time-style="+%d/%m/%y %H:%M:%S"
+ls "$1" --color -lah --time-style="+%d/%m/%y %H:%M:%S"
+	if [ $# -ne 1 ]
+then
+	ls . --color -lah --time-style="+%d/%m/%y %H:%M:%S"
+fi
 }
 
 # Random Man Page
