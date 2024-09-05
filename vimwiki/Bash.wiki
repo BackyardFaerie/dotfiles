@@ -41,6 +41,7 @@ Unassign variables with `unset var_name`
 
 12: Performing arithmetic may require use of <code>expr</code>, <code>expr</code> can also take vars e.g <code>expr $int1 + $int4</code>
 Example: <code>30 + 10</code> is *INVALID* but <code>expr 30 + $int4</code> gives the correct answer of 40 (assuming <code>int4=10</code> was declared previously)
+Note `expr` is outdated, see `(())` for the more modern syntax
 ^This is likely (aka I think it is because) Bash takes the values as arguments to the original command^
 ^Note that <code>*</code> does NOT work for multiplication as it is interpreted as wildcard even by <code>expr</code>^
 ^<code>*</code> must therefore be escaped as a special char with <code>\*</code>, as with whitespace etc^
