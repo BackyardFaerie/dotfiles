@@ -124,13 +124,14 @@ A: Iterate over an array
 B: Begin with a declaration of the var then the set
 C: Break from the loop once the set has been completely iterated over
 ^D: Should generally be used for a known and/or finite number of iterations^
-For loops 
+
 `for current_num in {1..10}
 do
 [logic]
 done`
 The above example will iterate over the set of `{1..10}` with `$current_num` incrementing by 1 for each loop until 10 is reached (this is basically `for int in [array elements] i++`)
 `{}` is probably how Bash denotes arrays
+
 ^Can use `file` to search for files matching certain patterns and use regex, e.g `for file in logfiles/*.log`^
 ^Bash uses spaces to separate elements in an array^
 
@@ -172,14 +173,22 @@ bar`
 25: Case Statements
 Can be used to take user input
 Declared via:
-`case $var in
-1) Case 1;;
-2) Case 2;;
-3) Case 3;;
-4) Catchall;;
-esac`
+	`case $var in
+		1) Case 1;;
+		2) Case 2;;
+		3) Case 3;;
+		4) Catchall;;
+	esac`
 In above example, `1)`, `2)`, `3)` etc correlate to value stored in `$var` associated with the case (e.g if case is preceded by `read $var` and user enters 1, case 1 will occur)
 The `*` is used as a wildcard to catch all other cases (in this example, 4+ or invalid input like h)
+^Multiple options can run the same logic using the OR operator as follows^
+	`case $var in
+		a|A) foo;;
+		b|B) bar;;
+		1) placeholder
+		*) logic
+	esac`
+
 
 26: Chaining Commands in Terminal and Scripts
 Command1 [operator] Command2
