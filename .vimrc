@@ -52,6 +52,7 @@ set cursorline
 "noremap j k|noremap <C-w>j <C-w>k|noremap <C-w><C-j> <C-w>k
 
 set foldmethod=manual
+nnoremap <space> za
 
 call plug#begin()
 
