@@ -38,3 +38,49 @@
 10: VimWiki Open in Current/New Tab
 	`\ww` | open in current tab
 	`\wt` | open in new tab
+	
+11: Open Multiple Files in Tabs
+Launch vim with
+	`vim -p file1 ../file2 ~/dir3/file3`
+	
+12: Search for Current Word
+	`#` to search for word cursor is currently on
+	
+13: Autocomplete
+	`Ctrl+N Ctrl+P` // next and previous suggestion respectively
+	
+14: File Explorer in Vim
+	`Lex` // List directories (open on right with `Lex!`)
+	`E` // List dir of last file opened in current window
+	`Sex` // List dir of last file opened in split window
+	`Vex` // `Sex` but vertical split
+	
+15: Manipulate Directories and Files in Explorer
+^Must be in Explorer window for these to work^
+	`d` // Create dir when in `E`/`Lex`/`Sex`/`Vex` window (type name, Esc to cancel, basically `mkdir`)
+	`%` // Same as `d` but creates a file (same as `touch`)
+	^Changes are not saved and dir/file not created until `:w`^
+	`R` // Rename file/dir
+	`D` // Delete file/dir
+	
+16: Folds (Collapsed Text Sections)
+^Has different fold modes to auto-fold^
+^More information available at `:help usr_28`^
+^See column for folds beside line number with `set foldcolumn=x` or `set fdc=x` where `x` is width 1-12^
+	`zf` // Create fold (mark text as foldable)
+	`zfap` // Fold (`zf`) all of a (`a`) paragraph (`p`)
+	`Ctrl+V zf` // Visual block mode to select multiple lines then mark as foldable
+	`zo` // Open fold
+	`zc` // Close fold
+	`zM` // Close all folds
+	`zR` // Open all folds
+	`za` // Toggle fold opened/closed
+		
+	Fold Methods (`set foldmethod=x`)
+	`indent` // Fold based on level of indent (useful for Python etc)
+	`syntax` // Folding behaviour defined in syntax files
+	`marker` // Text within `foldable block {{{}}}` markers is folded
+
+	Save Folds
+	`:mkview` // Save visual layout of folds and other layout details (windows etc?)
+	`:loadview` // Load saved views
