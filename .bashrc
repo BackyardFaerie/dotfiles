@@ -181,7 +181,7 @@ alias modd="cd /home/fae/game-ssd/ffxiv-mods/"
 alias cd-mods="cd /home/fae/game-ssd/ffxiv-mods/"
 
 # Move All TTMP/TTMP2 Files to ffxiv-mods/ and Append Moved Item Names to the to-install File
-alias modmv="ls ~/Downloads | grep 'ttmp\|ttmp2\|pmp' >> ~/game-ssd/ffxiv-mods/to-install && mv -v ~/Downloads/*.{ttmp,ttmp2,pmp} ~/game-ssd/ffxiv-mods/"
+alias modmv="ls ~/Downloads 2>/dev/null | grep 'ttmp\|ttmp2\|pmp' >> ~/game-ssd/ffxiv-mods/to-install && mv -v ~/Downloads/*.{ttmp,ttmp2,pmp} ~/game-ssd/ffxiv-mods/ 2>/dev/null"
 
 # Launch PCSX2
 alias pcsx2="flatpak run net.pcsx2.PCSX2"
